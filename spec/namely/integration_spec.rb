@@ -11,9 +11,9 @@ describe "integration tests" do
 
     it_behaves_like(
       "a resource with a show action",
-      id: "US",
-      name: "United States",
-      subdivision_type: "State"
+      :id => "US",
+      :name => "United States",
+      :subdivision_type => "State"
     )
   end
 
@@ -30,8 +30,8 @@ describe "integration tests" do
 
     it_behaves_like(
       "a resource with a show action",
-      id: "e5573698-3934-4abf-99cf-577b526d4789",
-      type: "recent_arrival",
+      :id => "e5573698-3934-4abf-99cf-577b526d4789",
+      :type => "recent_arrival",
     )
   end
 
@@ -63,22 +63,22 @@ describe "integration tests" do
 
     it_behaves_like(
       "a resource with a show action",
-      id: "20332458-c1fe-412f-bcb8-01622f04a35d",
-      first_name: "Leighton",
-      last_name: "Meester"
+      :id => "20332458-c1fe-412f-bcb8-01622f04a35d",
+      :first_name => "Leighton",
+      :last_name => "Meester"
     )
 
     it_behaves_like(
       "a resource with a create action",
-      first_name: "Beardsly",
-      last_name: "McDog",
-      email: "beardsly-#{Time.now.utc.to_f}@namely.com"
+      :first_name => "Beardsly",
+      :last_name => "McDog",
+      :email => "beardsly-#{Time.now.utc.to_f}@namely.com"
     )
 
     it_behaves_like(
       "a resource with an update action",
       "20332458-c1fe-412f-bcb8-01622f04a35d",
-      middle_name: "Beardsly"
+      :middle_name => "Beardsly"
     )
   end
 
@@ -87,14 +87,14 @@ describe "integration tests" do
 
     it_behaves_like(
       "a resource with a show action",
-      id: "bbf089f6-90c5-473c-8928-058014a462c9"
+      :id => "bbf089f6-90c5-473c-8928-058014a462c9"
     )
   end
 
   def conn
     Namely::Connection.new(
-      access_token: ENV.fetch("TEST_ACCESS_TOKEN"),
-      subdomain: ENV.fetch("TEST_SUBDOMAIN"),
+      :access_token => ENV.fetch("TEST_ACCESS_TOKEN"),
+      :subdomain => ENV.fetch("TEST_SUBDOMAIN"),
     )
   end
 end

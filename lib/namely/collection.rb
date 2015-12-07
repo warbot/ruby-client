@@ -32,9 +32,9 @@ module Namely
     #
     # @example
     #   profiles_collection.create!(
-    #     first_name: "Beardsly",
-    #     last_name: "McDog",
-    #     email: "beardsly@namely.com"
+    #     :first_name => "Beardsly",
+    #     :last_name => "McDog",
+    #     :email => "beardsly@namely.com"
     #   )
     #
     # @return [Model] the created model.

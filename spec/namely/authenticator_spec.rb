@@ -6,13 +6,13 @@ describe Namely::Authenticator do
   describe "#auth_code_url" do
     it "returns a URL to begin the authorization code URL flow" do
       authenticator = described_class.new(
-        client_id: "MY_CLIENT_ID",
-        client_secret: "MY_CLIENT_SECRET",
+        :client_id => "MY_CLIENT_ID",
+        :client_secret => "MY_CLIENT_SECRET",
       )
 
       authorization_code_url = authenticator.authorization_code_url(
-        subdomain: "ellingsonmineral",
-        redirect_uri: "http://www.example.com/authenticated",
+        :subdomain => "ellingsonmineral",
+        :redirect_uri => "http://www.example.com/authenticated",
       )
 
       parsed_uri = URI(authorization_code_url)
@@ -30,12 +30,12 @@ describe Namely::Authenticator do
 
     it "allows the redirect_uri to be omitted" do
       authenticator = described_class.new(
-        client_id: "MY_CLIENT_ID",
-        client_secret: "MY_CLIENT_SECRET",
+        :client_id => "MY_CLIENT_ID",
+        :client_secret => "MY_CLIENT_SECRET",
       )
 
       authorization_code_url = authenticator.authorization_code_url(
-        subdomain: "ellingsonmineral",
+        :subdomain => "ellingsonmineral",
       )
 
       parsed_uri = URI(authorization_code_url)
@@ -49,14 +49,14 @@ describe Namely::Authenticator do
 
     it "escapes reserved characters in query parameters" do
       authenticator = described_class.new(
-        client_id: "MY_CLIENT_ID",
-        client_secret: "MY_CLIENT_SECRET",
+        :client_id => "MY_CLIENT_ID",
+        :client_secret => "MY_CLIENT_SECRET",
       )
       redirect_uri = "http://example.com/?auth=true&provider=namely"
 
       authorization_code_url = authenticator.authorization_code_url(
-        subdomain: "ellingsonmineral",
-        redirect_uri: redirect_uri,
+        :subdomain => "ellingsonmineral",
+        :redirect_uri => redirect_uri,
       )
 
       parsed_uri = URI(authorization_code_url)
@@ -66,13 +66,13 @@ describe Namely::Authenticator do
 
     it "allows the host and protocol to be overridden" do
       authenticator = described_class.new(
-        client_id: "MY_CLIENT_ID",
-        client_secret: "MY_CLIENT_SECRET",
+        :client_id => "MY_CLIENT_ID",
+        :client_secret => "MY_CLIENT_SECRET",
       )
 
       authorization_code_url = authenticator.authorization_code_url(
-        protocol: "http",
-        host: "testing.example.com",
+        :protocol => "http",
+        :host => "testing.example.com",
       )
 
       parsed_uri = URI(authorization_code_url)
@@ -82,15 +82,15 @@ describe Namely::Authenticator do
 
     it "accepts a state parameter" do
       authenticator = described_class.new(
-        client_id: "MY_CLIENT_ID",
-        client_secret: "MY_CLIENT_SECRET",
+        :client_id => "MY_CLIENT_ID",
+        :client_secret => "MY_CLIENT_SECRET",
       )
 
       state = "this-is-a-piece-of-state"
 
       authorization_code_url = authenticator.authorization_code_url(
-        subdomain: "ellingsonmineral",
-        state: state,
+        :subdomain => "ellingsonmineral",
+        :state => state,
       )
 
       parsed_uri = URI(authorization_code_url)
@@ -102,22 +102,22 @@ describe Namely::Authenticator do
   describe "#retrieve_tokens" do
     it "exchanges an authorization code for access and refresh tokens" do
       erb_settings = {
-        erb: {
-          access_token: "MY_ACCESS_TOKEN",
-          refresh_token: "MY_REFRESH_TOKEN",
+        :erb => {
+          :access_token => "MY_ACCESS_TOKEN",
+          :refresh_token => "MY_REFRESH_TOKEN",
         }
       }
 
       VCR.use_cassette("token", erb_settings) do
         authenticator = described_class.new(
-          client_id: ENV.fetch("CLIENT_ID"),
-          client_secret: ENV.fetch("CLIENT_SECRET"),
+          :client_id => ENV.fetch("CLIENT_ID"),
+          :client_secret => ENV.fetch("CLIENT_SECRET"),
         )
 
         tokens = authenticator.retrieve_tokens(
-          subdomain: ENV.fetch("TEST_SUBDOMAIN"),
-          code: ENV.fetch("AUTH_CODE"),
-          redirect_uri: ENV.fetch("CLIENT_REDIRECT_URI"),
+          :subdomain => ENV.fetch("TEST_SUBDOMAIN"),
+          :code => ENV.fetch("AUTH_CODE"),
+          :redirect_uri => ENV.fetch("CLIENT_REDIRECT_URI"),
         )
 
         expect(tokens).to eq(
@@ -133,21 +133,21 @@ describe Namely::Authenticator do
   describe "#refresh_access_token" do
     it "uses a refresh token to retrieve a new access token" do
       erb_settings = {
-        erb: {
-          access_token: "MY_ACCESS_TOKEN",
+        :erb => {
+          :access_token => "MY_ACCESS_TOKEN",
         }
       }
 
       VCR.use_cassette("token_refresh", erb_settings) do
         authenticator = described_class.new(
-          client_id: ENV.fetch("CLIENT_ID"),
-          client_secret: ENV.fetch("CLIENT_SECRET"),
+          :client_id => ENV.fetch("CLIENT_ID"),
+          :client_secret => ENV.fetch("CLIENT_SECRET"),
         )
 
         tokens = authenticator.refresh_access_token(
-          subdomain: ENV.fetch("TEST_SUBDOMAIN"),
-          refresh_token: ENV.fetch("TEST_REFRESH_TOKEN"),
-          redirect_uri: ENV.fetch("CLIENT_REDIRECT_URI"),
+          :subdomain => ENV.fetch("TEST_SUBDOMAIN"),
+          :refresh_token => ENV.fetch("TEST_REFRESH_TOKEN"),
+          :redirect_uri => ENV.fetch("CLIENT_REDIRECT_URI"),
         )
 
         expect(tokens).to eq(
@@ -163,13 +163,13 @@ describe Namely::Authenticator do
     it "returns the profile of the current user" do
       VCR.use_cassette("current_user") do
         authenticator = described_class.new(
-          client_id: "MY_CLIENT_ID",
-          client_secret: "MY_CLIENT_SECRET",
+          :client_id => "MY_CLIENT_ID",
+          :client_secret => "MY_CLIENT_SECRET",
         )
 
         profile = authenticator.current_user(
-          access_token: ENV.fetch("TEST_ACCESS_TOKEN"),
-          subdomain: ENV.fetch("TEST_SUBDOMAIN"),
+          :access_token => ENV.fetch("TEST_ACCESS_TOKEN"),
+          :subdomain => ENV.fetch("TEST_SUBDOMAIN"),
         )
 
         expect(profile.id).to eq "459748d5-608c-4dce-bca9-49a066d7f3d0"

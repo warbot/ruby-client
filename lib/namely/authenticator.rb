@@ -10,8 +10,8 @@ module Namely
     #
     # @example
     #   authenticator = Authenticator.new(
-    #     client_id: "my-client-id",
-    #     client_secret: "my-client-secret"
+    #     :client_id => "my-client-id",
+    #     :client_secret => "my-client-secret"
     #   )
     #
     # @return [Authenticator]
@@ -32,11 +32,11 @@ module Namely
     # @return [String]
     def authorization_code_url(options)
       URL.new(options.merge(
-        path: "/api/v1/oauth2/authorize",
-        params: {
-          response_type: "code",
-          approve: "true",
-          client_id: client_id,
+        :path => "/api/v1/oauth2/authorize",
+        :params => {
+          :response_type => "code",
+          :approve => "true",
+          :client_id => client_id,
         },
       )).to_s
     end
@@ -50,14 +50,14 @@ module Namely
     #
     # @example
     #   authenticator = Authenticator.new(
-    #     client_id: "my-client-id",
-    #     client_secret: "my-client-secret"
+    #     :client_id => "my-client-id",
+    #     :client_secret => "my-client-secret"
     #   )
     #
     #   tokens = authenticator.retrieve_tokens(
-    #     code: "my-code",
-    #     subdomain: "my-subdomain",
-    #     redirect_uri: "my-redirect-uri"
+    #     :code => "my-code",
+    #     :subdomain => "my-subdomain",
+    #     :redirect_uri => "my-redirect-uri"
     #   )
     #
     #   tokens["access_token"] # => "my-access-token"
@@ -69,8 +69,8 @@ module Namely
     def retrieve_tokens(options)
       request_tokens(
         options,
-        grant_type: "authorization_code",
-        code: options.fetch(:code),
+        :grant_type => "authorization_code",
+        :code => options.fetch(:code),
       )
     end
 
@@ -83,14 +83,14 @@ module Namely
     #
     # @example
     #   authenticator = Authenticator.new(
-    #     client_id: "my-client-id",
-    #     client_secret: "my-client-secret"
+    #     :client_id => "my-client-id",
+    #     :client_secret => "my-client-secret"
     #   )
     #
     #   tokens = authenticator.refresh_access_token(
-    #     redirect_uri: "my-redirect-uri",
-    #     refresh_token: "my-refresh-token",
-    #     subdomain: "my-subdomain"
+    #     :redirect_uri => "my-redirect-uri",
+    #     :refresh_token => "my-refresh-token",
+    #     :subdomain => "my-subdomain"
     #   )
     #
     #   tokens["access_token"] # => "my-access-token"
@@ -101,8 +101,8 @@ module Namely
     def refresh_access_token(options)
       request_tokens(
         options,
-        grant_type: "refresh_token",
-        refresh_token: options.fetch(:refresh_token),
+        :grant_type => "refresh_token",
+        :refresh_token => options.fetch(:refresh_token),
       )
     end
 
@@ -118,15 +118,15 @@ module Namely
       subdomain = options.fetch(:subdomain)
 
       user_url = URL.new(options.merge(
-        params: {
-          access_token: access_token,
+        :params => {
+          :access_token => access_token,
         },
-        path: "/api/v1/profiles/me",
+        :path => "/api/v1/profiles/me",
       )).to_s
 
       response = RestClient.get(
         user_url,
-        accept: :json,
+        :accept => :json,
       )
       build_profile(
         access_token,
@@ -141,10 +141,10 @@ module Namely
 
     def request_tokens(url_options, post_params)
       response = RestClient.post(
-        URL.new(url_options.merge(path: "/api/v1/oauth2/token")).to_s,
+        URL.new(url_options.merge(:path => "/api/v1/oauth2/token")).to_s,
         {
-          client_id: client_id,
-          client_secret: client_secret,
+          :client_id => client_id,
+          :client_secret => client_secret,
         }.merge(post_params),
       )
       JSON.parse(response)
@@ -152,9 +152,9 @@ module Namely
 
     def build_profile(access_token, subdomain, attributes)
       profile_gateway = ResourceGateway.new(
-        access_token: access_token,
-        endpoint: "profiles",
-        subdomain: subdomain,
+        :access_token => access_token,
+        :endpoint => "profiles",
+        :subdomain => subdomain,
       )
       Model.new(profile_gateway, attributes)
     end

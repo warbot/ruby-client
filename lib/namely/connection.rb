@@ -68,7 +68,7 @@ module Namely
     #
     # @return [Collection]
     def profiles
-      collection("profiles", paged: true)
+      collection("profiles", :paged => true)
     end
 
     # Return a Collection of reports.
@@ -88,9 +88,9 @@ module Namely
 
     def gateway(endpoint, options = {})
       ResourceGateway.new(options.merge(
-        access_token: access_token,
-        endpoint: endpoint,
-        subdomain: subdomain,
+        :access_token => access_token,
+        :endpoint => endpoint,
+        :subdomain => subdomain,
       ))
     end
   end

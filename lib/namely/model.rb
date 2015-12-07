@@ -32,7 +32,7 @@ module Namely
     #
     # @example
     #   my_profile.update(
-    #     middle_name: "Ludwig"
+    #     :middle_name => "Ludwig"
     #   )
     #
     # @raise [FailedRequestError] if the request failed for any reason.

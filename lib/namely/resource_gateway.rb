@@ -36,7 +36,7 @@ module Namely
     private
 
     def json_index_all
-      get("/#{endpoint}", limit: :all)[resource_name]
+      get("/#{endpoint}", :limit => :all)[resource_name]
     end
 
     def json_index_paged
@@ -74,32 +74,32 @@ module Namely
     end
 
     def get(path, params = {})
-      params.merge!(access_token: access_token)
-      JSON.parse(RestClient.get(url(path), accept: :json, params: params))
+      params.merge!(:access_token => access_token)
+      JSON.parse(RestClient.get(url(path), :accept => :json, :params => params))
     end
 
     def head(path, params = {})
-      params.merge!(access_token: access_token)
-      RestClient.head(url(path), accept: :json, params: params)
+      params.merge!(:access_token => access_token)
+      RestClient.head(url(path), :accept => :json, :params => params)
     end
 
     def post(path, params)
-      params.merge!(access_token: access_token)
+      params.merge!(:access_token => access_token)
       RestClient.post(
         url(path),
         params.to_json,
-        accept: :json,
-        content_type: :json,
+        :accept => :json,
+        :content_type => :json,
       )
     end
 
     def put(path, params)
-      params.merge!(access_token: access_token)
+      params.merge!(:access_token => access_token)
       RestClient.put(
         url(path),
         params.to_json,
-        accept: :json,
-        content_type: :json
+        :accept => :json,
+        :content_type => :json
       )
     end
   end

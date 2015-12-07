@@ -11,10 +11,10 @@ describe Namely::ResourceGateway do
 
   def gateway
     @gateway ||= Namely::ResourceGateway.new(
-      access_token: access_token,
-      endpoint: "widgets",
-      resource_name: "widgets",
-      subdomain: subdomain,
+      :access_token => access_token,
+      :endpoint => "widgets",
+      :resource_name => "widgets",
+      :subdomain => subdomain,
     )
   end
 
@@ -32,13 +32,13 @@ describe Namely::ResourceGateway do
         :get,
         "https://#{subdomain}.namely.com/api/v1/widgets"
       ).with(
-        query: {
-          access_token: access_token,
-          limit: :all
+        :query => {
+          :access_token => access_token,
+          :limit => :all
         }
       ).to_return(
-        body: "{\"widgets\": [\"woo!\"]}",
-        status: 200
+        :body => "{\"widgets\": [\"woo!\"]}",
+        :status => 200
       )
 
       expect(gateway.json_index).to eq ["woo!"]
@@ -47,26 +47,26 @@ describe Namely::ResourceGateway do
     context "for paged resources" do
       def gateway
         @gateway ||= Namely::ResourceGateway.new(
-          access_token: access_token,
-          endpoint: "widgets",
-          resource_name: "widgets",
-          subdomain: subdomain,
-          paged: true
+          :access_token => access_token,
+          :endpoint => "widgets",
+          :resource_name => "widgets",
+          :subdomain => subdomain,
+          :paged => true
         )
       end
 
       it "emits an enumerator that represents all paged items" do
         stub_request(:get, "https://#{subdomain}.namely.com/api/v1/widgets").
-          with(query: { access_token: access_token }).
-          to_return(body: { widgets: [ id: "123-456" ] }.to_json)
+          with(:query => { :access_token => access_token }).
+          to_return(:body => { :widgets => [ :id => "123-456" ] }.to_json)
 
         stub_request(:get, "https://#{subdomain}.namely.com/api/v1/widgets").
-          with(query: { access_token: access_token, after: "123-456" }).
-          to_return(body: { widgets: [ id: "456-789" ] }.to_json)
+          with(:query => { :access_token => access_token, :after => "123-456" }).
+          to_return(:body => { :widgets => [ :id => "456-789" ] }.to_json)
 
         stub_request(:get, "https://#{subdomain}.namely.com/api/v1/widgets").
-          with(query: { access_token: access_token, after: "456-789" }).
-          to_return(body: { widgets: [ ] }.to_json)
+          with(:query => { :access_token => access_token, :after => "456-789" }).
+          to_return(:body => { :widgets => [ ] }.to_json)
 
         expect(gateway.json_index).to be_kind_of(Enumerator)
         ids = gateway.json_index.map { |h| h['id'] }
@@ -82,12 +82,12 @@ describe Namely::ResourceGateway do
         :get,
         "https://#{subdomain}.namely.com/api/v1/widgets/#{valid_id}"
       ).with(
-        query: {
-          access_token: access_token
+        :query => {
+          :access_token => access_token
         }
       ).to_return(
-        body: "{\"widgets\": [{\"name\": \"wilbur\", \"favorite_color\": \"chartreuse\"}]}",
-        status: 200
+        :body => "{\"widgets\": [{\"name\": \"wilbur\", \"favorite_color\": \"chartreuse\"}]}",
+        :status => 200
       )
 
       widget = gateway.json_show(valid_id)
@@ -103,12 +103,12 @@ describe Namely::ResourceGateway do
         :head,
         "https://#{subdomain}.namely.com/api/v1/widgets/#{valid_id}"
       ).with(
-        query: {
-          access_token: access_token
+        :query => {
+          :access_token => access_token
         }
       ).to_return(
-        body: "",
-        status: 200
+        :body => "",
+        :status => 200
       )
 
       expect(gateway.show_head(valid_id)).to be_empty
@@ -119,11 +119,11 @@ describe Namely::ResourceGateway do
         :head,
         "https://#{subdomain}.namely.com/api/v1/widgets/#{invalid_id}"
       ).with(
-        query: {
-          access_token: access_token
+        :query => {
+          :access_token => access_token
         }
       ).to_return(
-        status: 404
+        :status => 404
       )
 
       expect { gateway.show_head(invalid_id) }.to raise_error RestClient::ResourceNotFound
