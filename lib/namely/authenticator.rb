@@ -36,8 +36,8 @@ module Namely
         :params => {
           :response_type => "code",
           :approve => "true",
-          :client_id => client_id,
-        },
+          :client_id => client_id
+        }
       )).to_s
     end
 
@@ -70,7 +70,7 @@ module Namely
       request_tokens(
         options,
         :grant_type => "authorization_code",
-        :code => options.fetch(:code),
+        :code => options.fetch(:code)
       )
     end
 
@@ -102,7 +102,7 @@ module Namely
       request_tokens(
         options,
         :grant_type => "refresh_token",
-        :refresh_token => options.fetch(:refresh_token),
+        :refresh_token => options.fetch(:refresh_token)
       )
     end
 
@@ -121,12 +121,12 @@ module Namely
         :params => {
           :access_token => access_token,
         },
-        :path => "/api/v1/profiles/me",
+        :path => "/api/v1/profiles/me"
       )).to_s
 
       response = RestClient.get(
         user_url,
-        :accept => :json,
+        :accept => :json
       )
       build_profile(
         access_token,
@@ -144,7 +144,7 @@ module Namely
         URL.new(url_options.merge(:path => "/api/v1/oauth2/token")).to_s,
         {
           :client_id => client_id,
-          :client_secret => client_secret,
+          :client_secret => client_secret
         }.merge(post_params),
       )
       JSON.parse(response)
@@ -154,7 +154,7 @@ module Namely
       profile_gateway = ResourceGateway.new(
         :access_token => access_token,
         :endpoint => "profiles",
-        :subdomain => subdomain,
+        :subdomain => subdomain
       )
       Model.new(profile_gateway, attributes)
     end
