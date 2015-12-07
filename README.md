@@ -11,16 +11,12 @@ your account through Ruby.
 Add this line to your application's :Gemfile =>
 
 ```ruby
-gem "namely"
+gem 'namely-ruby187', :git => 'https://github.com/warbot/ruby-client.git'
 ```
 
 And then :execute =>
 
     $ bundle
-
-Or install it yourself :as =>
-
-    $ gem install namely
 
 ## Establishing a connection
 
