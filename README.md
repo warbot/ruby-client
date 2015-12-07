@@ -1,8 +1,5 @@
 # Namely
 
-[![Travis](https://travis-ci.org/namely/ruby-client.svg?branch=master)](https://travis-ci.org/namely/ruby-client/builds)
-[![Code Climate](https://codeclimate.com/github/namely/ruby-client/badges/gpa.svg)](https://codeclimate.com/github/namely/ruby-client)
-
 The Namely gem wraps the Namely HTTP API, allowing you to manipulate
 your account through Ruby.
 
