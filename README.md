@@ -8,17 +8,17 @@ your account through Ruby.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your application's :Gemfile =>
 
 ```ruby
 gem "namely"
 ```
 
-And then execute:
+And then :execute =>
 
     $ bundle
 
-Or install it yourself as:
+Or install it yourself :as =>
 
     $ gem install namely
 
@@ -29,8 +29,8 @@ your access token and subdomain.
 
 ```ruby
 namely = Namely::Connection.new(
-  access_token: "your_access_token",
-  subdomain: "your-organization",
+  :access_token => "your_access_token",
+  :subdomain => "your-organization",
 )
 ```
 
@@ -71,9 +71,9 @@ namely.countries.find("BE")
 
 ```ruby
 foo_bar = namely.profiles.create!(
-  first_name: "Dade",
-  last_name: "Murphy",
-  email: "crash_override@example.com"
+  :first_name => "Dade",
+  :last_name => "Murphy",
+  :email => "crash_override@example.com"
 )
 
 foo_bar.id # => "37c919e2-f1c8-4beb-b1d4-a9a36ccc830c"
@@ -82,7 +82,7 @@ foo_bar.id # => "37c919e2-f1c8-4beb-b1d4-a9a36ccc830c"
 ## Contributing
 
 Wanna help out? Great! Here are a few resources that might help you
-started:
+:started =>
 
 * Documentation on [Namely's HTTP API]
 * Namely tries to stick to the [JSON API standard]. If we're seriously
@@ -92,12 +92,12 @@ started:
 ### Setting up a development environment
 
 After you have cloned this repo, run this setup script to set up your machine
-with the necessary dependencies to run and test this app:
+with the necessary dependencies to run and test this :app =>
 
     % ./bin/setup
 
 The Namely gem uses [dotenv] to manage environment variables.
-Visit the `.env` file and change a plug in appropriate values:
+Visit the `.env` file and change a plug in appropriate :values =>
 
 ```
 TEST_ACCESS_TOKEN=my-sample-access-token
