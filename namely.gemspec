@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "namely/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "namely"
+  spec.name          = "namely-ruby187"
   spec.version       = Namely::VERSION
   spec.authors       = ["Harry Schwartz"]
   spec.email         = ["harry@thoughtbot.com"]
