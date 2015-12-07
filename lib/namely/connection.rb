@@ -90,7 +90,7 @@ module Namely
       ResourceGateway.new(options.merge(
         :access_token => access_token,
         :endpoint => endpoint,
-        :subdomain => subdomain,
+        :subdomain => subdomain
       ))
     end
   end
