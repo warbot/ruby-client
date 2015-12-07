@@ -8,13 +8,13 @@ your account through Ruby.
 
 ## Installation
 
-Add this line to your application's :Gemfile =>
+Add this line to your application's Gemfile: 
 
 ```ruby
 gem 'namely-ruby187', :git => 'https://github.com/warbot/ruby-client.git'
 ```
 
-And then :execute =>
+And then execute:
 
     $ bundle
 
