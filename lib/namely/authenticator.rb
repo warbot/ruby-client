@@ -145,7 +145,7 @@ module Namely
         {
           :client_id => client_id,
           :client_secret => client_secret
-        }.merge(post_params),
+        }.merge(post_params)
       )
       JSON.parse(response)
     end
