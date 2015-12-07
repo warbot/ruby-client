@@ -89,7 +89,7 @@ module Namely
         url(path),
         params.to_json,
         :accept => :json,
-        :content_type => :json,
+        :content_type => :json
       )
     end
 
