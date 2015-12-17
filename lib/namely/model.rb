@@ -1,6 +1,7 @@
 require "ostruct"
 
 module Namely
+  OpenStruct.__send__(:define_method, :id) { @table[:id] }
   class Model < OpenStruct
     def initialize(resource_gateway, attributes)
       @resource_gateway = resource_gateway

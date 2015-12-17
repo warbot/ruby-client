@@ -116,3 +116,6 @@ page of the site.
 [JSON API standard]: http://jsonapi.org/
 [dotenv]: https://github.com/bkeepers/dotenv
 [Fork it!]: https://github.com/namely/ruby-client/fork
+
+#### From 1.9 hash syntax to 1.8
+find . -name \*.rb -exec perl -p -i -e 's/(\w+):([\w+|\s\"\'"'"'])/:\1\ =>\2/g' {} \;
